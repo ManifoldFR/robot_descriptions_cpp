@@ -27,10 +27,34 @@ GTEST_TEST(LoadTest, UR5) {
   EXPECT_EQ(model.name, "ur5");
 }
 
+GTEST_TEST(LoadTest, UR5_gripper) {
+  pinocchio::Model model;
+  robot_descriptions::loadModelFromToml("ur.toml", "ur5_gripper", model);
+  EXPECT_EQ(model.njoints, 7);
+  EXPECT_EQ(model.nq, 6);
+  EXPECT_EQ(model.name, "ur5");
+}
+
+GTEST_TEST(LoadTest, UR5_limited) {
+  pinocchio::Model model;
+  robot_descriptions::loadModelFromToml("ur.toml", "ur5_limited", model);
+  EXPECT_EQ(model.njoints, 7);
+  EXPECT_EQ(model.nq, 6);
+  EXPECT_EQ(model.name, "ur5");
+}
+
+GTEST_TEST(LoadTest, UR3) {
+  pinocchio::Model model;
+  robot_descriptions::loadModelFromToml("ur.toml", "ur3", model);
+  EXPECT_EQ(model.njoints, 7);
+  EXPECT_EQ(model.nq, 6);
+  EXPECT_EQ(model.name, "ur3");
+}
+
 GTEST_TEST(LoadTest, DoublePendulum) {
   pinocchio::Model model;
-  robot_descriptions::loadModelFromToml("double_pendulum.toml", "double_pendulum",
-                                    model);
+  robot_descriptions::loadModelFromToml("double_pendulum.toml",
+                                        "double_pendulum", model);
   EXPECT_EQ(model.njoints, 3);
   EXPECT_EQ(model.nq, 2);
   EXPECT_EQ(model.nv, 2);
@@ -40,7 +64,7 @@ GTEST_TEST(LoadTest, DoublePendulum) {
 GTEST_TEST(LoadTest, DoublePendulumContinuous) {
   pinocchio::Model model;
   robot_descriptions::loadModelFromToml("double_pendulum.toml",
-                                    "double_pendulum_continuous", model);
+                                        "double_pendulum_continuous", model);
   EXPECT_EQ(model.njoints, 3);
   EXPECT_EQ(model.nq, 4);
   EXPECT_EQ(model.nv, 2);
