@@ -3,6 +3,7 @@ find_package(example-robot-data REQUIRED)
 find_package(fmt REQUIRED)
 
 set(ROBOT_TOML_DIR ${PROJECT_SOURCE_DIR}/assets)
+set(PROJECT_USE_CMAKE_EXPORT True)
 
 file(GLOB robot_SOURCES CONFIGURE_DEPENDS ${PROJECT_NAME}/*.cpp)
 
