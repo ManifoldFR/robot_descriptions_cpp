@@ -24,3 +24,10 @@ target_compile_definitions(
   robot_descriptions_cpp
   PUBLIC ROBOT_TOML_DIR="${ROBOT_TOML_DIR}"
 )
+
+install(
+  TARGETS robot_descriptions_cpp
+  EXPORT ${PROJECT_NAME}
+  INCLUDES DESTINATION ${CMAKE_INSTALL_FULL_INCLUDEDIR}
+  LIBRARY DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}
+)
