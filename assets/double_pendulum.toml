@@ -1,0 +1,8 @@
+path = "double_pendulum_description"
+urdf_subpath = "urdf"
+
+[double_pendulum]
+urdf_filename = "double_pendulum.urdf"
+
+[double_pendulum_continuous]
+urdf_filename = "double_pendulum_continuous.urdf"

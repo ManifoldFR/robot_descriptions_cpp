@@ -1,0 +1,11 @@
+free_flyer = true
+ref_posture = "standing"
+urdf_filename = "anymal.urdf"
+srdf_filename = "anymal.srdf"
+
+[anymal]
+path = "anymal_b_simple_description"
+
+[anymal_c]
+urdf_subpath = "urdf"
+path = "anymal_c_simple_description"

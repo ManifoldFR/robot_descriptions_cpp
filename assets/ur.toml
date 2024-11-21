@@ -1,0 +1,18 @@
+path = "ur_description"
+urdf_subpath = "urdf"
+srdf_subpath = "srdf"
+free_flyer = false
+
+[ur5]
+urdf_filename = "ur5_robot.urdf"
+srdf_filename = "ur5.srdf"
+
+[ur5_gripper]
+urdf_filename = "ur5_gripper.urdf"
+srdf_filename = "ur5_gripper.srdf"
+
+[ur5_limited]
+urdf_filename = "ur5_joint_limited_robot.urdf"
+
+[ur3]
+urdf_filename = "ur3_robot.urdf"
