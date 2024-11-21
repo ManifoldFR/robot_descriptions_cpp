@@ -7,8 +7,14 @@ set(ROBOT_TOML_DIR ${PROJECT_SOURCE_DIR}/assets)
 file(GLOB robot_SOURCES CONFIGURE_DEPENDS ${PROJECT_NAME}/*.cpp)
 
 add_library(robot_descriptions_cpp SHARED ${robot_SOURCES})
-target_include_directories(robot_descriptions_cpp PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(robot_descriptions_cpp PUBLIC pinocchio::pinocchio_parsers fmt::fmt)
+target_include_directories(
+  robot_descriptions_cpp
+  PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
+)
+target_link_libraries(
+  robot_descriptions_cpp
+  PUBLIC pinocchio::pinocchio_parsers fmt::fmt
+)
 target_link_libraries(robot_descriptions_cpp PRIVATE toml11)
 target_link_libraries(
   robot_descriptions_cpp
