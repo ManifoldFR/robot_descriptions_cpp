@@ -1,0 +1,8 @@
+build/
+.cache/
+results/**/*.csv
+results/*.pdf
+results/*.png
+results/*.svg
+*.pkl
+*.mp4
