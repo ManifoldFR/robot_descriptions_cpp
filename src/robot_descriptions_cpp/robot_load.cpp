@@ -20,7 +20,9 @@ void loadModelFromSpec(const robot_spec &spec, pinocchio::Model &model,
 void loadGeomFromSpec(const robot_spec &spec, const pinocchio::Model &model,
                       pinocchio::GeometryModel &geomModel,
                       pinocchio::GeometryType type) {
-  pinocchio::urdf::buildGeom(model, spec.urdfPath, type, geomModel);
+  std::vector<std::string> package_dirs = {PACKAGE_DIRS_BASE};
+  pinocchio::urdf::buildGeom(model, spec.urdfPath, type, geomModel,
+                             package_dirs);
 }
 
 void loadModelFromToml(const std::string &tomlFile, const std::string &key,
