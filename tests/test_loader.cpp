@@ -21,10 +21,14 @@ GTEST_TEST(LoadSpec, ANYmalC) {
 
 GTEST_TEST(LoadTest, UR5) {
   pinocchio::Model model;
+  pinocchio::GeometryModel geomModel;
   robot_descriptions::loadModelFromToml("ur.toml", "ur5", model);
+  robot_descriptions::loadGeomFromToml("ur.toml", "ur5", model, geomModel,
+                                       pinocchio::VISUAL);
   EXPECT_EQ(model.njoints, 7);
   EXPECT_EQ(model.nq, 6);
   EXPECT_EQ(model.name, "ur5");
+  EXPECT_EQ(geomModel.ngeoms, 7);
 }
 
 GTEST_TEST(LoadTest, UR5_gripper) {
