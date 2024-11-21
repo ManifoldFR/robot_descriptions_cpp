@@ -1,6 +1,6 @@
-find_package(pinocchio REQUIRED)
-find_package(example-robot-data REQUIRED)
-find_package(fmt REQUIRED)
+add_project_dependency(pinocchio REQUIRED)
+add_project_dependency(example-robot-data REQUIRED)
+add_project_dependency(fmt REQUIRED)
 
 set(ROBOT_TOML_DIR ${PROJECT_SOURCE_DIR}/assets)
 set(PROJECT_USE_CMAKE_EXPORT True)
@@ -10,16 +10,17 @@ file(GLOB robot_SOURCES CONFIGURE_DEPENDS ${PROJECT_NAME}/*.cpp)
 add_library(robot_descriptions_cpp SHARED ${robot_SOURCES})
 target_include_directories(
   robot_descriptions_cpp
-  PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
+  PUBLIC
+    $<INSTALL_INTERFACE:include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
 )
 target_link_libraries(
   robot_descriptions_cpp
-  PUBLIC pinocchio::pinocchio_parsers fmt::fmt
-)
-target_link_libraries(robot_descriptions_cpp PRIVATE toml11)
-target_link_libraries(
-  robot_descriptions_cpp
-  PUBLIC example-robot-data::example-robot-data
+  PUBLIC
+    example-robot-data::example-robot-data
+    pinocchio::pinocchio_parsers
+    fmt::fmt
+  PRIVATE toml11
 )
 target_compile_definitions(
   robot_descriptions_cpp
@@ -28,7 +29,7 @@ target_compile_definitions(
 
 install(
   TARGETS robot_descriptions_cpp
-  EXPORT ${PROJECT_NAME}
+  EXPORT ${TARGETS_EXPORT_NAME}
   INCLUDES DESTINATION ${CMAKE_INSTALL_FULL_INCLUDEDIR}
   LIBRARY DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}
 )

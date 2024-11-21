@@ -9,6 +9,8 @@ set(CMAKE_DISABLE_WERROR True)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(PROJECT_USE_CMAKE_EXPORT True)
 set(BUILD_SHARED_LIBS ON)
 
 include(cmake/base.cmake)
@@ -34,3 +36,5 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 
 add_subdirectory(src)
 add_subdirectory(tests)
+
+pkg_config_append_libs(${PROJECT_NAME})
