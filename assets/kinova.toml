@@ -1,0 +1,6 @@
+path = "kinova_description"
+srdf_filename = "kinova.srdf"
+ref_posture = "arm_up"
+
+[kinova]
+urdf_filename = "kinova.urdf"

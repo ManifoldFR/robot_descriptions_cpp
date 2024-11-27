@@ -1,0 +1,10 @@
+path = "solo_description"
+ref_posture = "standing"
+free_flyer = true
+srdf_filename = "solo.srdf"
+
+[solo8]
+urdf_filename = "solo.urdf"
+
+[solo12]
+urdf_filename = "solo12.urdf"
