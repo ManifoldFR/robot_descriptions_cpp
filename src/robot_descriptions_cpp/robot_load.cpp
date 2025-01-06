@@ -31,4 +31,12 @@ void loadGeomFromToml(const std::string &tomlFile, const std::string &key,
   loadGeomFromSpec(spec, model, geomModel, type);
 }
 
+void loadModelsFromToml(const std::string &tomlFile, const std::string &key,
+                        pinocchio::Model &model,
+                        pinocchio::GeometryModel *visualModel,
+                        pinocchio::GeometryModel *collisionModel) {
+  robot_spec spec = loadRobotSpecFromToml(tomlFile, key);
+  loadModelsFromSpec(spec, model, visualModel, collisionModel);
+}
+
 } // namespace robot_descriptions

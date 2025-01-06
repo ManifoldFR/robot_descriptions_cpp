@@ -4,6 +4,8 @@
 #include <pinocchio/multibody/model.hpp>
 
 namespace robot_descriptions {
+/** LOAD MODEL FROM SPEC STRUCT **/
+
 // fwd decl
 struct robot_spec;
 
@@ -21,6 +23,26 @@ inline pinocchio::Model loadModelFromSpec(const robot_spec &spec,
   return model;
 }
 
+inline pinocchio::GeometryModel loadGeomFromSpec(const robot_spec &spec,
+                                                 const pinocchio::Model &model,
+                                                 pinocchio::GeometryType type) {
+  pinocchio::GeometryModel geomModel;
+  loadGeomFromSpec(spec, model, geomModel, type);
+  return geomModel;
+}
+
+inline void loadModelsFromSpec(const robot_spec &spec, pinocchio::Model &model,
+                               pinocchio::GeometryModel *visualModel,
+                               pinocchio::GeometryModel *collisionModel) {
+  loadModelFromSpec(spec, model, false);
+  if (visualModel)
+    loadGeomFromSpec(spec, model, *visualModel, pinocchio::VISUAL);
+  if (collisionModel)
+    loadGeomFromSpec(spec, model, *collisionModel, pinocchio::COLLISION);
+}
+
+/** LOAD MODEL FROM TOML FILE **/
+
 void loadModelFromToml(const std::string &tomlFile, const std::string &key,
                        pinocchio::Model &model, bool verbose = false);
 
@@ -37,4 +59,8 @@ inline pinocchio::Model loadModelFromToml(const std::string &tomlFile,
   return model;
 }
 
+void loadModelsFromToml(const std::string &tomlFile, const std::string &key,
+                        pinocchio::Model &model,
+                        pinocchio::GeometryModel *visualModel,
+                        pinocchio::GeometryModel *collisionModel);
 } // namespace robot_descriptions
