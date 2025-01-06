@@ -5,9 +5,12 @@ add_project_dependency(fmt REQUIRED)
 set(ROBOT_TOML_DIR ${PROJECT_SOURCE_DIR}/assets)
 set(PROJECT_USE_CMAKE_EXPORT True)
 
-file(GLOB robot_SOURCES CONFIGURE_DEPENDS ${PROJECT_NAME}/*.cpp)
-
-add_library(robot_descriptions_cpp SHARED ${robot_SOURCES})
+add_library(
+  robot_descriptions_cpp
+  SHARED
+  robot_descriptions_cpp/robot_load.cpp
+  robot_descriptions_cpp/robot_spec.cpp
+)
 target_include_directories(
   robot_descriptions_cpp
   PUBLIC
