@@ -35,6 +35,8 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 
 add_subdirectory(src)
-add_subdirectory(tests)
+if(BULILD_TESTING)
+  add_subdirectory(tests)
+endif()
 
 pkg_config_append_libs(${PROJECT_NAME})
