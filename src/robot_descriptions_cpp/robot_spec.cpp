@@ -1,6 +1,5 @@
 #include "robot_spec.hpp"
 #include <filesystem>
-#include <fmt/core.h>
 #include <optional>
 #include <toml11/conversion.hpp>
 #include <toml11/find.hpp>
@@ -52,7 +51,7 @@ const fs::path PACKAGE_DIRS_BASE =
 robot_spec loadRobotSpecFromToml(const std::string &fname,
                                  const std::string &key, bool verbose) {
   const fs::path tomlPath = fs::path{ROBOT_TOML_DIR} / fname;
-  fmt::println("Loading robot spec from TOML file {:s}", tomlPath.c_str());
+  printf("Loading robot spec from TOML file %s\n", tomlPath.c_str());
   const toml::value data = toml::parse(tomlPath);
 
   const spec_impl_data parent = toml::get<spec_impl_data>(data);
@@ -80,12 +79,11 @@ robot_spec loadRobotSpecFromToml(const std::string &fname,
       c2.ref_posture.value_or("standing"), c2.free_flyer.value_or(false)};
 
   if (verbose) {
-    fmt::println("Loaded robot:");
-    fmt::println(" > URDF file {:s}", result.urdfPath);
+    printf("Loaded robot:\n > URDF file %s\n", result.urdfPath.c_str());
     if (!result.srdfPath.empty())
-      fmt::println(" > SRDF file {:s}", result.srdfPath);
+      printf(" > SRDF file %s\n", result.srdfPath.c_str());
     if (result.floatingBase)
-      fmt::println(" > Robot has floating base");
+      printf(" > Robot has floating base\n");
   }
   return result;
 }

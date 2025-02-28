@@ -19,10 +19,7 @@ target_include_directories(
 )
 target_link_libraries(
   robot_descriptions_cpp
-  PUBLIC
-    example-robot-data::example-robot-data
-    pinocchio::pinocchio_parsers
-    fmt::fmt
+  PUBLIC example-robot-data::example-robot-data pinocchio::pinocchio_parsers
   PRIVATE toml11
 )
 target_compile_definitions(
