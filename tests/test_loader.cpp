@@ -1,22 +1,26 @@
+#include "robot_descriptions_cpp/load_spec.hpp"
 #include "robot_descriptions_cpp/robot_load.hpp"
 #include "robot_descriptions_cpp/robot_spec.hpp"
+
+#include <filesystem>
 #include <gtest/gtest.h>
 
 using namespace robot_descriptions;
+namespace fs = std::filesystem;
 
 GTEST_TEST(LoadSpec, UR5) {
-  robot_spec spec = loadRobotSpecFromToml("ur.toml", "ur5", true);
-  EXPECT_TRUE(fs::exists(spec.urdfPath));
+  robot_spec spec = loadErdRobotSpecFromToml("ur.toml", "ur5", true);
+  EXPECT_TRUE(fs::exists(spec.urdf_path));
 }
 
 GTEST_TEST(LoadSpec, ANYmalB) {
-  robot_spec spec = loadRobotSpecFromToml("ANYmal.toml", "anymal", true);
-  EXPECT_TRUE(fs::exists(spec.urdfPath));
+  robot_spec spec = loadErdRobotSpecFromToml("ANYmal.toml", "anymal_b", true);
+  EXPECT_TRUE(fs::exists(spec.urdf_path));
 }
 
 GTEST_TEST(LoadSpec, ANYmalC) {
-  robot_spec spec = loadRobotSpecFromToml("ANYmal.toml", "anymal_c", true);
-  EXPECT_TRUE(fs::exists(spec.urdfPath));
+  robot_spec spec = loadErdRobotSpecFromToml("ANYmal.toml", "anymal_c", true);
+  EXPECT_TRUE(fs::exists(spec.urdf_path));
 }
 
 GTEST_TEST(LoadTest, UR5) {
