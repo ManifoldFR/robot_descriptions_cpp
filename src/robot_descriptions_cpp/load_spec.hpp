@@ -7,7 +7,7 @@
 namespace robot_descriptions {
 namespace fs = std::filesystem;
 
-static const fs::path EXAMPLE_ROBOT_DATA_PACKAGE_DIRS =
+inline static const fs::path EXAMPLE_ROBOT_DATA_PACKAGE_DIRS =
     fs::path(EXAMPLE_ROBOT_DATA_MODEL_DIR) / "../..";
 
 robot_spec loadErdRobotSpecFromToml(std::string_view filename,
