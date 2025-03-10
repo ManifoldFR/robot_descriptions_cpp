@@ -1,19 +1,19 @@
 #include "robot_load.hpp"
-#include "robot_spec.hpp"
+#include "load_spec.hpp"
 #include <pinocchio/parsers/urdf.hpp>
 
 namespace robot_descriptions {
 
 void loadModelFromSpec(const robot_spec &spec, pinocchio::Model &model,
                        bool verbose) {
-  pinocchio::urdf::buildModel(spec.urdfPath, model, verbose);
+  pinocchio::urdf::buildModel(spec.urdf_path, model, verbose);
 }
 
 void loadGeomFromSpec(const robot_spec &spec, const pinocchio::Model &model,
                       pinocchio::GeometryModel &geomModel,
                       pinocchio::GeometryType type) {
-  std::vector<std::string> package_dirs = {PACKAGE_DIRS_BASE};
-  pinocchio::urdf::buildGeom(model, spec.urdfPath, type, geomModel,
+  std::vector<std::string> package_dirs = {EXAMPLE_ROBOT_DATA_PACKAGE_DIRS};
+  pinocchio::urdf::buildGeom(model, spec.urdf_path, type, geomModel,
                              package_dirs);
 }
 

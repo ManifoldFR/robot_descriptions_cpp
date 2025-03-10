@@ -1,8 +1,6 @@
-#include "robot_spec.hpp"
-#include <filesystem>
+#include "load_spec.hpp"
 #include <optional>
 #include <toml11/conversion.hpp>
-#include <toml11/find.hpp>
 #include <toml11/parser.hpp>
 
 namespace robot_descriptions {
@@ -17,7 +15,10 @@ void _ssnv_apply_self(V U::*mptr, U &self, const U &other) {
   sesecnoval_inplace(other.*mptr, self.*mptr);
 }
 
-struct spec_impl_data {
+#define _REPLACE_FIELD(name)                                                   \
+  _ssnv_apply_self(&spec_load_data::name, *this, other)
+
+struct spec_load_data {
   std::optional<std::string> path;
   std::optional<std::string> urdf_subpath;
   std::optional<std::string> urdf_filename;
@@ -26,37 +27,34 @@ struct spec_impl_data {
   std::optional<std::string> ref_posture;
   std::optional<bool> free_flyer;
 
-  spec_impl_data &join(const spec_impl_data &other) {
-    _ssnv_apply_self(&spec_impl_data::path, *this, other);
-    _ssnv_apply_self(&spec_impl_data::urdf_subpath, *this, other);
-    _ssnv_apply_self(&spec_impl_data::urdf_filename, *this, other);
-    _ssnv_apply_self(&spec_impl_data::srdf_subpath, *this, other);
-    _ssnv_apply_self(&spec_impl_data::srdf_filename, *this, other);
-    _ssnv_apply_self(&spec_impl_data::ref_posture, *this, other);
-    _ssnv_apply_self(&spec_impl_data::free_flyer, *this, other);
+  spec_load_data &join(const spec_load_data &other) {
+    _REPLACE_FIELD(path);
+    _REPLACE_FIELD(urdf_subpath);
+    _REPLACE_FIELD(urdf_filename);
+    _REPLACE_FIELD(srdf_subpath);
+    _REPLACE_FIELD(srdf_filename);
+    _REPLACE_FIELD(ref_posture);
+    _REPLACE_FIELD(free_flyer);
     return *this;
   }
 };
 } // namespace robot_descriptions
-TOML11_DEFINE_CONVERSION_NON_INTRUSIVE(robot_descriptions::spec_impl_data, path,
+TOML11_DEFINE_CONVERSION_NON_INTRUSIVE(robot_descriptions::spec_load_data, path,
                                        urdf_subpath, urdf_filename,
                                        srdf_subpath, srdf_filename, ref_posture,
                                        free_flyer)
 
 namespace robot_descriptions {
 
-const fs::path PACKAGE_DIRS_BASE =
-    fs::path(EXAMPLE_ROBOT_DATA_MODEL_DIR) / "../..";
-
-robot_spec loadRobotSpecFromToml(const std::string &fname,
-                                 const std::string &key, bool verbose) {
+robot_spec loadRobotSpecFromToml(std::string_view fname, std::string_view key,
+                                 bool verbose) {
   const fs::path tomlPath = fs::path{ROBOT_TOML_DIR} / fname;
   printf("Loading robot spec from TOML file %s\n", tomlPath.c_str());
   const toml::value data = toml::parse(tomlPath);
 
-  const spec_impl_data parent = toml::get<spec_impl_data>(data);
-  const spec_impl_data child = toml::find<spec_impl_data>(data, key);
-  spec_impl_data c2 = parent;
+  const spec_load_data parent = toml::get<spec_load_data>(data);
+  const spec_load_data child = toml::find<spec_load_data>(data, key.data());
+  spec_load_data c2 = parent;
   c2.join(child);
 
   if (!c2.path)
@@ -79,10 +77,10 @@ robot_spec loadRobotSpecFromToml(const std::string &fname,
       c2.ref_posture.value_or("standing"), c2.free_flyer.value_or(false)};
 
   if (verbose) {
-    printf("Loaded robot:\n > URDF file %s\n", result.urdfPath.c_str());
-    if (!result.srdfPath.empty())
-      printf(" > SRDF file %s\n", result.srdfPath.c_str());
-    if (result.floatingBase)
+    printf("Loaded robot:\n > URDF file %s\n", result.urdf_path.c_str());
+    if (!result.srdf_path.empty())
+      printf(" > SRDF file %s\n", result.srdf_path.c_str());
+    if (result.floating_base)
       printf(" > Robot has floating base\n");
   }
   return result;

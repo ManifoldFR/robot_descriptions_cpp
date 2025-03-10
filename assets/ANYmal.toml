@@ -3,7 +3,7 @@ ref_posture = "standing"
 urdf_filename = "anymal.urdf"
 srdf_filename = "anymal.srdf"
 
-[anymal]
+[anymal_b]
 path = "anymal_b_simple_description"
 
 [anymal_c]
