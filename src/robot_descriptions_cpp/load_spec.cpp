@@ -46,8 +46,8 @@ TOML11_DEFINE_CONVERSION_NON_INTRUSIVE(robot_descriptions::spec_load_data, path,
 
 namespace robot_descriptions {
 
-robot_spec loadRobotSpecFromToml(std::string_view fname, std::string_view key,
-                                 bool verbose) {
+robot_spec loadErdRobotSpecFromToml(std::string_view fname,
+                                    std::string_view key, bool verbose) {
   const fs::path tomlPath = fs::path{ROBOT_TOML_DIR} / fname;
   printf("Loading robot spec from TOML file %s\n", tomlPath.c_str());
   const toml::value data = toml::parse(tomlPath);
@@ -74,7 +74,10 @@ robot_spec loadRobotSpecFromToml(std::string_view fname, std::string_view key,
       has_srdf
           ? path / c2.srdf_subpath.value_or("srdf") / c2.srdf_filename.value()
           : "",
-      c2.ref_posture.value_or("standing"), c2.free_flyer.value_or(false)};
+      c2.ref_posture.value_or("standing"),
+      EXAMPLE_ROBOT_DATA_PACKAGE_DIRS,
+      c2.free_flyer.value_or(false),
+  };
 
   if (verbose) {
     printf("Loaded robot:\n > URDF file %s\n", result.urdf_path.c_str());
