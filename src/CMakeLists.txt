@@ -1,5 +1,5 @@
-add_project_dependency(pinocchio REQUIRED)
-add_project_dependency(example-robot-data REQUIRED)
+ADD_PROJECT_DEPENDENCY(pinocchio REQUIRED)
+ADD_PROJECT_DEPENDENCY(example-robot-data REQUIRED)
 
 set(ROBOT_TOML_DIR ${PROJECT_SOURCE_DIR}/assets)
 set(PROJECT_USE_CMAKE_EXPORT True)

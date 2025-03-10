@@ -14,7 +14,7 @@ set(PROJECT_USE_CMAKE_EXPORT True)
 set(BUILD_SHARED_LIBS ON)
 
 include(cmake/base.cmake)
-compute_project_args(PROJECT_ARGS LANGUAGES CXX)
+COMPUTE_PROJECT_ARGS(PROJECT_ARGS LANGUAGES CXX)
 project(${PROJECT_NAME} ${PROJECT_ARGS})
 set(CMAKE_VERBOSE_MAKEFILE False)
 
@@ -39,4 +39,4 @@ if(BULILD_TESTING)
   add_subdirectory(tests)
 endif()
 
-pkg_config_append_libs(${PROJECT_NAME})
+PKG_CONFIG_APPEND_LIBS(${PROJECT_NAME})
