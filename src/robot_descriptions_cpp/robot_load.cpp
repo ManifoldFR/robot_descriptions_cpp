@@ -1,6 +1,7 @@
 #include "robot_load.hpp"
 #include "load_spec.hpp"
 #include "robot_spec.hpp"
+#include <pinocchio/parsers/srdf.hpp>
 #include <pinocchio/parsers/urdf.hpp>
 
 namespace robot_descriptions {
@@ -16,6 +17,10 @@ std::vector<std::string> get_package_dirs(const robot_spec &spec) {
 void loadModelFromSpec(const robot_spec &spec, pinocchio::Model &model,
                        bool verbose) {
   pinocchio::urdf::buildModel(spec.urdf_path, model, verbose);
+  if (!spec.srdf_path.empty()) {
+    pinocchio::srdf::loadReferenceConfigurations(model, spec.srdf_path,
+                                                 verbose);
+  }
 }
 
 void loadGeomFromSpec(const robot_spec &spec, const pinocchio::Model &model,
