@@ -27,3 +27,22 @@ git clone https://github.com/ManifoldFR/robot_descriptions_cpp --recursive
 cmake -DCMAKE_INSTALL_PREFIX=your/install/prefix -S . -B build/ && cd build/
 cmake --build . -jNCPUS --target install
 ```
+
+## Robot description files
+
+Robots for each robot family (ANYmal, UR...) is described in a TOML file.
+Common robot data is specified at the top-level table of the file, with overrides specified in inner tables.
+
+```toml
+free_flyer = true
+ref_posture = "standing"
+urdf_filename = "anymal.urdf"
+srdf_filename = "anymal.srdf"
+
+[anymal_b]
+path = "anymal_b_simple_description"
+
+[anymal_c]
+urdf_subpath = "urdf"
+path = "anymal_c_simple_description"
+```
