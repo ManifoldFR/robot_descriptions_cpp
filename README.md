@@ -20,6 +20,7 @@ This library also contains functions and structs which replicate the functionali
 
 ### Steps
 
+`robot_descriptions_cpp` requires a C++17 compliant compiler.
 Just follow the following steps to clone the repository and contained submodule dependencies, create a build directory, build the library and install it:
 
 ```bash
