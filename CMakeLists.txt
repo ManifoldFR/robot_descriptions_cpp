@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
-set(PROJECT_URL "https://github.com/ManifoldFR/robot_descriptions_cpp.git")
 set(PROJECT_NAME robot_descriptions_cpp)
+set(PROJECT_URL "https://github.com/ManifoldFR/${PROJECT_NAME}.git")
 set(PROJECT_DESCRIPTION "Robot descriptions in C++.")
 set(PROJECT_CUSTOM_HEADER_EXTENSION "hpp")
 set(PROJECT_CUSTOM_HEADER_DIR ${PROJECT_NAME})
