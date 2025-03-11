@@ -2,7 +2,6 @@
 #include "robot_descriptions_cpp/robot_load.hpp"
 #include "robot_descriptions_cpp/robot_spec.hpp"
 
-#include <filesystem>
 #include <gtest/gtest.h>
 
 using namespace robot_descriptions;
