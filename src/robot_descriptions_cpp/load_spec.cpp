@@ -48,8 +48,9 @@ namespace robot_descriptions {
 
 robot_spec loadErdRobotSpecFromToml(std::string_view fname,
                                     std::string_view key, bool verbose) {
-  const fs::path tomlPath = fs::path{ROBOT_TOML_DIR} / fname;
-  printf("Loading robot spec from TOML file %s\n", tomlPath.c_str());
+  const fs::path tomlPath = fs::path{DEFAULT_TOML_DIR} / fname;
+  if (verbose)
+    printf("Loading robot spec from TOML file %s\n", tomlPath.c_str());
   const toml::value data = toml::parse(tomlPath);
 
   const spec_load_data parent = toml::get<spec_load_data>(data);
@@ -80,11 +81,14 @@ robot_spec loadErdRobotSpecFromToml(std::string_view fname,
   };
 
   if (verbose) {
-    printf("Loaded robot:\n > URDF file %s\n", result.urdf_path.c_str());
-    if (!result.srdf_path.empty())
-      printf(" > SRDF file %s\n", result.srdf_path.c_str());
-    if (result.floating_base)
-      printf(" > Robot has floating base\n");
+    printf("robot_spec {\n");
+    printf("\tpath:           %s\n", result.path.c_str());
+    printf("\turdf_path:      %s\n", result.urdf_path.c_str());
+    printf("\tsrdf_path:      %s\n", result.srdf_path.c_str());
+    printf("\tref_posture:    %s\n", result.ref_posture.c_str());
+    printf("\tpackage_path:   %s\n", result.package_path.c_str());
+    printf("\tfloating_base:  %d\n", result.floating_base);
+    printf("}\n");
   }
   return result;
 }
