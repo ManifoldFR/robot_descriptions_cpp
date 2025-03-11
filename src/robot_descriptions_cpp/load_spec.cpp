@@ -70,7 +70,6 @@ robot_spec loadErdRobotSpecFromToml(std::string_view fname,
   const bool has_srdf = c2.srdf_filename.has_value();
 
   robot_spec result{
-      path,
       path / c2.urdf_subpath.value_or("robots") / c2.urdf_filename.value(),
       has_srdf
           ? path / c2.srdf_subpath.value_or("srdf") / c2.srdf_filename.value()
@@ -82,7 +81,6 @@ robot_spec loadErdRobotSpecFromToml(std::string_view fname,
 
   if (verbose) {
     printf("robot_spec {\n");
-    printf("\tpath:           %s\n", result.path.c_str());
     printf("\turdf_path:      %s\n", result.urdf_path.c_str());
     printf("\tsrdf_path:      %s\n", result.srdf_path.c_str());
     printf("\tref_posture:    %s\n", result.ref_posture.c_str());

@@ -1,6 +1,8 @@
 #include "robot_load.hpp"
 #include "load_spec.hpp"
 #include "robot_spec.hpp"
+
+#include <filesystem>
 #include <pinocchio/parsers/srdf.hpp>
 #include <pinocchio/parsers/urdf.hpp>
 
