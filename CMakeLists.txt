@@ -20,6 +20,12 @@ COMPUTE_PROJECT_ARGS(PROJECT_ARGS LANGUAGES CXX)
 project(${PROJECT_NAME} ${PROJECT_ARGS})
 set(CMAKE_VERBOSE_MAKEFILE False)
 
+option(
+  ROBOT_DESCRIPTIONS_CPP_INSTALL
+  "Install the library and CMake targets."
+  ON
+)
+
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
   message(STATUS "Setting build type to 'Release' as none was specified.")
   set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)
