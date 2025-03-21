@@ -25,6 +25,10 @@ option(
   "Install the library and CMake targets."
   ON
 )
+option(ROBOT_DESCRIPTIONS_CPP_TESTING
+  "Whether to build and run tests."
+  ON)
+set(BUILD_TESTING ${ROBOT_DESCRIPTIONS_CPP_TESTING} CACHE BOOL "")
 
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
   message(STATUS "Setting build type to 'Release' as none was specified.")
@@ -43,7 +47,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 
 add_subdirectory(src)
-if(BUILD_TESTING)
+if(ROBOT_DESCRIPTIONS_CPP_TESTING)
   add_subdirectory(tests)
 endif()
 
