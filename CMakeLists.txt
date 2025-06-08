@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.22)
 set(PROJECT_NAME robot_descriptions_cpp)
 set(PROJECT_URL "https://github.com/ManifoldFR/${PROJECT_NAME}.git")
 set(PROJECT_DESCRIPTION "Robot descriptions in C++.")
@@ -25,9 +25,7 @@ option(
   "Install the library and CMake targets."
   ON
 )
-option(ROBOT_DESCRIPTIONS_CPP_TESTING
-  "Whether to build and run tests."
-  ON)
+option(ROBOT_DESCRIPTIONS_CPP_TESTING "Whether to build and run tests." ON)
 set(BUILD_TESTING ${ROBOT_DESCRIPTIONS_CPP_TESTING} CACHE BOOL "")
 
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
