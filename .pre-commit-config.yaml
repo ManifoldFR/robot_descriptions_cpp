@@ -33,3 +33,4 @@ repos:
     rev: v1.5.5
     hooks:
       - id: forbid-tabs
+        exclude: src/third-party/.*
