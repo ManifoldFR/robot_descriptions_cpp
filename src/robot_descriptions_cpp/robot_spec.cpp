@@ -15,6 +15,17 @@ std::vector<std::string> getPackageDirs(const robot_spec &spec) {
   };
 }
 
+std::ostream &operator<<(std::ostream &oss, const robot_spec &spec) {
+  oss << "robot_spec {"
+      << "\n    urdf_path:      " << spec.urdf_path                       //
+      << "\n    srdf_path:      " << spec.srdf_path                       //
+      << "\n    ref_posture:    " << spec.ref_posture                     //
+      << "\n    package_path:   " << spec.package_path                    //
+      << "\n    floating_base:  " << std::boolalpha << spec.floating_base //
+      << "\n}";
+  return oss;
+}
+
 void loadModelFromSpec(const robot_spec &spec, pinocchio::Model &model,
                        bool verbose) {
   pinocchio::urdf::buildModel(spec.urdf_path, model, verbose);
