@@ -35,18 +35,6 @@ inline pinocchio::Model loadModelFromSpec(const robot_spec &spec,
   return model;
 }
 
-void loadGeomFromSpec(const robot_spec &spec, const pinocchio::Model &model,
-                      pinocchio::GeometryModel &geomModel,
-                      pinocchio::GeometryType type);
-
-inline pinocchio::GeometryModel loadGeomFromSpec(const robot_spec &spec,
-                                                 const pinocchio::Model &model,
-                                                 pinocchio::GeometryType type) {
-  pinocchio::GeometryModel geomModel;
-  loadGeomFromSpec(spec, model, geomModel, type);
-  return geomModel;
-}
-
 /// \param spec Robot description
 /// \param model Pinocchio model to load into.
 /// \param visualModel If not NULL, then Pinocchio geometry model for visuals.
@@ -62,11 +50,6 @@ void loadModelsFromSpec(const robot_spec &spec, pinocchio::Model &model,
 
 void loadModelFromToml(const std::string &filename, const std::string &key,
                        pinocchio::Model &model, bool verbose = false);
-
-void loadGeomFromToml(const std::string &filename, const std::string &key,
-                      const pinocchio::Model &model,
-                      pinocchio::GeometryModel &geomModel,
-                      pinocchio::GeometryType type);
 
 inline pinocchio::Model loadModelFromToml(const std::string &filename,
                                           const std::string &key,

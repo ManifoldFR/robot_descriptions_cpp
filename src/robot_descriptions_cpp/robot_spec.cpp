@@ -41,22 +41,18 @@ void loadModelFromSpec(const robot_spec &spec, pinocchio::Model &model,
   }
 }
 
-void loadGeomFromSpec(const robot_spec &spec, const pinocchio::Model &model,
-                      pinocchio::GeometryModel &geomModel,
-                      pinocchio::GeometryType type) {
-  pinocchio::urdf::buildGeom(model, spec.urdf_path, type, geomModel,
-                             getPackageDirs(spec));
-}
-
 void loadModelsFromSpec(const robot_spec &spec, pinocchio::Model &model,
                         pinocchio::GeometryModel *visualModel,
                         pinocchio::GeometryModel *collisionModel,
                         bool verbose) {
   loadModelFromSpec(spec, model, verbose);
+  auto package_dirs = getPackageDirs(spec);
   if (visualModel)
-    loadGeomFromSpec(spec, model, *visualModel, pinocchio::VISUAL);
+    pinocchio::urdf::buildGeom(model, spec.urdf_path, pinocchio::VISUAL,
+                               *visualModel);
   if (collisionModel) {
-    loadGeomFromSpec(spec, model, *collisionModel, pinocchio::COLLISION);
+    pinocchio::urdf::buildGeom(model, spec.urdf_path, pinocchio::COLLISION,
+                               *collisionModel);
     if (fs::exists(spec.srdf_path)) {
       collisionModel->addAllCollisionPairs();
       pinocchio::srdf::removeCollisionPairs(model, *collisionModel,
@@ -71,14 +67,6 @@ void loadModelFromToml(const std::string &tomlFile, const std::string &key,
                        pinocchio::Model &model, bool verbose) {
   robot_spec spec = loadErdRobotSpecFromToml(tomlFile, key, verbose);
   loadModelFromSpec(spec, model, verbose);
-}
-
-void loadGeomFromToml(const std::string &tomlFile, const std::string &key,
-                      const pinocchio::Model &model,
-                      pinocchio::GeometryModel &geomModel,
-                      pinocchio::GeometryType type) {
-  robot_spec spec = loadErdRobotSpecFromToml(tomlFile, key);
-  loadGeomFromSpec(spec, model, geomModel, type);
 }
 
 void loadModelsFromToml(const std::string &tomlFile, const std::string &key,
