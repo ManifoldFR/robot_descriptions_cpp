@@ -65,4 +65,14 @@ void loadModelsFromToml(const std::string &filename, const std::string &key,
                         pinocchio::GeometryModel *collisionModel,
                         bool verbose = false);
 
+[[nodiscard]] inline std::tuple<pinocchio::Model, pinocchio::GeometryModel,
+                                pinocchio::GeometryModel>
+loadModelsFromToml(const std::string &filename, const std::string &key) {
+  pinocchio::Model model;
+  pinocchio::GeometryModel visualModel, collisionModel;
+  loadModelsFromToml(filename, key, model, &visualModel, &collisionModel,
+                     false);
+  return {model, visualModel, collisionModel};
+}
+
 } // namespace robot_descriptions
