@@ -18,7 +18,6 @@ target_include_directories(
 target_link_libraries(
   ${PROJECT_NAME}
   PUBLIC example-robot-data::example-robot-data pinocchio::pinocchio_parsers
-  PRIVATE toml11
 )
 
 target_compile_definitions(
