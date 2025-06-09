@@ -15,4 +15,6 @@ struct robot_spec {
 
 std::vector<std::string> get_package_dirs(const robot_spec &spec);
 
+std::ostream &operator<<(std::ostream &oss, const robot_spec &spec);
+
 } // namespace robot_descriptions

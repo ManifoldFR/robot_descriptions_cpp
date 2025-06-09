@@ -79,16 +79,21 @@ robot_spec loadErdRobotSpecFromToml(std::string_view fname,
       c2.free_flyer.value_or(false),
   };
 
-  if (verbose) {
-    printf("robot_spec {\n");
-    printf("\turdf_path:      %s\n", result.urdf_path.c_str());
-    printf("\tsrdf_path:      %s\n", result.srdf_path.c_str());
-    printf("\tref_posture:    %s\n", result.ref_posture.c_str());
-    printf("\tpackage_path:   %s\n", result.package_path.c_str());
-    printf("\tfloating_base:  %d\n", result.floating_base);
-    printf("}\n");
-  }
+  if (verbose)
+    std::cout << result << std::endl;
+
   return result;
+}
+
+std::ostream &operator<<(std::ostream &oss, const robot_spec &spec) {
+  oss << "robot_spec {"
+      << "\n    urdf_path:      " << spec.urdf_path                       //
+      << "\n    srdf_path:      " << spec.srdf_path                       //
+      << "\n    ref_posture:    " << spec.ref_posture                     //
+      << "\n    package_path:   " << spec.package_path                    //
+      << "\n    floating_base:  " << std::boolalpha << spec.floating_base //
+      << "\n}";
+  return oss;
 }
 
 } // namespace robot_descriptions
