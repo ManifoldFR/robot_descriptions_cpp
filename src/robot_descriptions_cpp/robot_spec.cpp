@@ -32,7 +32,12 @@ void loadModelFromSpec(const robot_spec &spec, pinocchio::Model &model,
   if (fs::exists(spec.srdf_path)) {
     pinocchio::srdf::loadReferenceConfigurations(model, spec.srdf_path,
                                                  verbose);
-    pinocchio::srdf::loadRotorParameters(model, spec.srdf_path, verbose);
+    try {
+      pinocchio::srdf::loadRotorParameters(model, spec.srdf_path, verbose);
+    } catch (const std::invalid_argument &) {
+      // catch error
+      return;
+    }
   }
 }
 
