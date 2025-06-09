@@ -1,5 +1,4 @@
 #include "robot_descriptions_cpp/load_spec.hpp"
-#include "robot_descriptions_cpp/robot_load.hpp"
 #include "robot_descriptions_cpp/robot_spec.hpp"
 
 #include <gtest/gtest.h>
