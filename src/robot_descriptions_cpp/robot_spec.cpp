@@ -74,7 +74,7 @@ void loadModelsFromToml(const std::string &tomlFile, const std::string &key,
                         pinocchio::GeometryModel *visualModel,
                         pinocchio::GeometryModel *collisionModel,
                         bool verbose) {
-  robot_spec spec = loadErdRobotSpecFromToml(tomlFile, key);
+  robot_spec spec = loadErdRobotSpecFromToml(tomlFile, key, verbose);
   loadModelsFromSpec(spec, model, visualModel, collisionModel, verbose);
 }
 
