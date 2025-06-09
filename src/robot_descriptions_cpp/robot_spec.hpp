@@ -5,6 +5,8 @@
 
 namespace robot_descriptions {
 
+/// \brief Intermediate data format for the metadat to use when loading the
+/// robot: URDF and SRDF file, package dirs.
 struct robot_spec {
   std::string urdf_path;
   std::string srdf_path;
@@ -13,7 +15,8 @@ struct robot_spec {
   bool floating_base;
 };
 
-std::vector<std::string> get_package_dirs(const robot_spec &spec);
+/// \brief Get list of package dirs for the given robot_spec.
+std::vector<std::string> getPackageDirs(const robot_spec &spec);
 
 std::ostream &operator<<(std::ostream &oss, const robot_spec &spec);
 

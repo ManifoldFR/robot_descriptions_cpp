@@ -8,7 +8,7 @@
 
 namespace robot_descriptions {
 
-std::vector<std::string> get_package_dirs(const robot_spec &spec) {
+std::vector<std::string> getPackageDirs(const robot_spec &spec) {
   return std::vector<std::string>{
       spec.package_path,
       fs::path(spec.package_path).parent_path(),
@@ -29,7 +29,7 @@ void loadGeomFromSpec(const robot_spec &spec, const pinocchio::Model &model,
                       pinocchio::GeometryModel &geomModel,
                       pinocchio::GeometryType type) {
   pinocchio::urdf::buildGeom(model, spec.urdf_path, type, geomModel,
-                             get_package_dirs(spec));
+                             getPackageDirs(spec));
 }
 
 void loadModelFromToml(const std::string &tomlFile, const std::string &key,
