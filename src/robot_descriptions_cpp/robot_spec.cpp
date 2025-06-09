@@ -49,10 +49,10 @@ void loadModelsFromSpec(const robot_spec &spec, pinocchio::Model &model,
   auto package_dirs = getPackageDirs(spec);
   if (visualModel)
     pinocchio::urdf::buildGeom(model, spec.urdf_path, pinocchio::VISUAL,
-                               *visualModel);
+                               *visualModel, package_dirs);
   if (collisionModel) {
     pinocchio::urdf::buildGeom(model, spec.urdf_path, pinocchio::COLLISION,
-                               *collisionModel);
+                               *collisionModel, package_dirs);
     if (fs::exists(spec.srdf_path)) {
       collisionModel->addAllCollisionPairs();
       pinocchio::srdf::removeCollisionPairs(model, *collisionModel,
