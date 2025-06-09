@@ -38,16 +38,12 @@ inline pinocchio::GeometryModel loadGeomFromSpec(const robot_spec &spec,
 /// \param model Pinocchio model to load into.
 /// \param visualModel If not NULL, then Pinocchio geometry model for visuals.
 /// \param collisionModel If not NULL, then Pinocchio geometry model for
+/// \param verbose Passed to the loaders.
 /// collisions.
-inline void loadModelsFromSpec(const robot_spec &spec, pinocchio::Model &model,
-                               pinocchio::GeometryModel *visualModel,
-                               pinocchio::GeometryModel *collisionModel) {
-  loadModelFromSpec(spec, model, false);
-  if (visualModel)
-    loadGeomFromSpec(spec, model, *visualModel, pinocchio::VISUAL);
-  if (collisionModel)
-    loadGeomFromSpec(spec, model, *collisionModel, pinocchio::COLLISION);
-}
+void loadModelsFromSpec(const robot_spec &spec, pinocchio::Model &model,
+                        pinocchio::GeometryModel *visualModel,
+                        pinocchio::GeometryModel *collisionModel,
+                        bool verbose = false);
 
 /** LOAD MODEL FROM TOML FILE **/
 
@@ -70,5 +66,6 @@ inline pinocchio::Model loadModelFromToml(const std::string &filename,
 void loadModelsFromToml(const std::string &filename, const std::string &key,
                         pinocchio::Model &model,
                         pinocchio::GeometryModel *visualModel,
-                        pinocchio::GeometryModel *collisionModel);
+                        pinocchio::GeometryModel *collisionModel,
+                        bool verbose = false);
 } // namespace robot_descriptions

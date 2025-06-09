@@ -19,7 +19,7 @@ std::vector<std::string> getPackageDirs(const robot_spec &spec) {
 void loadModelFromSpec(const robot_spec &spec, pinocchio::Model &model,
                        bool verbose) {
   pinocchio::urdf::buildModel(spec.urdf_path, model, verbose);
-  if (!spec.srdf_path.empty()) {
+  if (fs::exists(spec.srdf_path)) {
     pinocchio::srdf::loadReferenceConfigurations(model, spec.srdf_path,
                                                  verbose);
     pinocchio::srdf::loadRotorParameters(model, spec.srdf_path, verbose);
@@ -32,6 +32,25 @@ void loadGeomFromSpec(const robot_spec &spec, const pinocchio::Model &model,
   pinocchio::urdf::buildGeom(model, spec.urdf_path, type, geomModel,
                              getPackageDirs(spec));
 }
+
+void loadModelsFromSpec(const robot_spec &spec, pinocchio::Model &model,
+                        pinocchio::GeometryModel *visualModel,
+                        pinocchio::GeometryModel *collisionModel,
+                        bool verbose) {
+  loadModelFromSpec(spec, model, verbose);
+  if (visualModel)
+    loadGeomFromSpec(spec, model, *visualModel, pinocchio::VISUAL);
+  if (collisionModel) {
+    loadGeomFromSpec(spec, model, *collisionModel, pinocchio::COLLISION);
+    if (fs::exists(spec.srdf_path)) {
+      collisionModel->addAllCollisionPairs();
+      pinocchio::srdf::removeCollisionPairs(model, *collisionModel,
+                                            spec.srdf_path, false);
+    }
+  }
+}
+
+// LOADERS FROM TOML FILE ====================
 
 void loadModelFromToml(const std::string &tomlFile, const std::string &key,
                        pinocchio::Model &model, bool verbose) {
@@ -50,9 +69,10 @@ void loadGeomFromToml(const std::string &tomlFile, const std::string &key,
 void loadModelsFromToml(const std::string &tomlFile, const std::string &key,
                         pinocchio::Model &model,
                         pinocchio::GeometryModel *visualModel,
-                        pinocchio::GeometryModel *collisionModel) {
+                        pinocchio::GeometryModel *collisionModel,
+                        bool verbose) {
   robot_spec spec = loadErdRobotSpecFromToml(tomlFile, key);
-  loadModelsFromSpec(spec, model, visualModel, collisionModel);
+  loadModelsFromSpec(spec, model, visualModel, collisionModel, verbose);
 }
 
 } // namespace robot_descriptions
