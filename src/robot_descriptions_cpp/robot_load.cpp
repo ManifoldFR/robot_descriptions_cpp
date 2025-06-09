@@ -22,6 +22,7 @@ void loadModelFromSpec(const robot_spec &spec, pinocchio::Model &model,
   if (!spec.srdf_path.empty()) {
     pinocchio::srdf::loadReferenceConfigurations(model, spec.srdf_path,
                                                  verbose);
+    pinocchio::srdf::loadRotorParameters(model, spec.srdf_path, verbose);
   }
 }
 
