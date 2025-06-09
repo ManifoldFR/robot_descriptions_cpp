@@ -1,7 +1,7 @@
 #include "load_spec.hpp"
+#include "third-party/toml.hpp"
+#include <iostream>
 #include <optional>
-#include <toml11/conversion.hpp>
-#include <toml11/parser.hpp>
 
 namespace robot_descriptions {
 
@@ -10,13 +10,7 @@ auto sesecnoval_inplace(const std::optional<T> &v1, std::optional<T> &v2) {
   v2 = v1.has_value() ? v1 : v2;
 }
 
-template <typename V, typename U>
-void _ssnv_apply_self(V U::*mptr, U &self, const U &other) {
-  sesecnoval_inplace(other.*mptr, self.*mptr);
-}
-
-#define _REPLACE_FIELD(name)                                                   \
-  _ssnv_apply_self(&spec_load_data::name, *this, other)
+#define _REPLACE_FIELD(name) sesecnoval_inplace(other.name, this->name)
 
 struct spec_load_data {
   std::optional<std::string> path;
@@ -38,23 +32,41 @@ struct spec_load_data {
     return *this;
   }
 };
-} // namespace robot_descriptions
-TOML11_DEFINE_CONVERSION_NON_INTRUSIVE(robot_descriptions::spec_load_data, path,
-                                       urdf_subpath, urdf_filename,
-                                       srdf_subpath, srdf_filename, ref_posture,
-                                       free_flyer)
 
-namespace robot_descriptions {
+spec_load_data from_toml(const toml::table &tbl) {
+  spec_load_data out;
+  out.path = tbl["path"].value<std::string>();
+  out.urdf_subpath = tbl["urdf_subpath"].value<std::string>();
+  out.urdf_filename = tbl["urdf_filename"].value<std::string>();
+  out.srdf_subpath = tbl["srdf_subpath"].value<std::string>();
+  out.srdf_filename = tbl["srdf_filename"].value<std::string>();
+  out.ref_posture = tbl["ref_posture"].value<std::string>();
+  out.free_flyer = tbl["free_flyer"].value<bool>();
+  return out;
+}
 
 robot_spec loadErdRobotSpecFromToml(std::string_view fname,
                                     std::string_view key, bool verbose) {
   const fs::path tomlPath = fs::path{DEFAULT_TOML_DIR} / fname;
   if (verbose)
     printf("Loading robot spec from TOML file %s\n", tomlPath.c_str());
-  const toml::value data = toml::parse(tomlPath);
+  toml::table data;
+  try {
+    data = toml::parse_file(tomlPath.string());
+  } catch (const toml::parse_error &err) {
+    std::cerr << "Error parsing file " << err.source().path //
+              << ":\n"
+              << err.description() << "\n (" << err.source().begin << ")\n";
+    throw;
+  }
 
-  const spec_load_data parent = toml::get<spec_load_data>(data);
-  const spec_load_data child = toml::find<spec_load_data>(data, key.data());
+  const spec_load_data parent = from_toml(data);
+  spec_load_data child;
+  if (auto child_tbl = data[key].as_table()) {
+    child = from_toml(*child_tbl);
+  } else {
+    throw std::runtime_error("Child table now found.");
+  }
   spec_load_data c2 = parent;
   c2.join(child);
 
